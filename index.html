@@ -229,6 +229,21 @@ canvas {
   color: #ff4081;
 }
 
+#mute-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  z-index: 10;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+#mute-btn:hover {
+  transform: scale(1.1);
+}
+
 
 </style>
 </head>
@@ -283,7 +298,12 @@ canvas {
   </div>
 </div>
 
+<audio id="bg-music" loop>
+  <source src="location.mp3" type="audio/mpeg">
+</audio>
+<div id="mute-btn">🔊</div>
 
+ 
 <script>
 /* NO BUTTON */
 const noMessages = [
@@ -314,8 +334,13 @@ document.getElementById("yes-btn").addEventListener("click", () => {
   startFireworks();
   document.getElementById("gif-container").style.display = "flex";
 
+  const music = document.getElementById("bg-music");
+  music.volume = 0.4;   // soft volume
+  music.play();
+
   setTimeout(showFinal, 5000);
 });
+
 
 /* FINAL SCREEN */
 function showFinal() {
@@ -394,6 +419,18 @@ closeNote.addEventListener("click", () => {
   envelope.style.display = "block";
 });
 
+const muteBtn = document.getElementById("mute-btn");
+const music = document.getElementById("bg-music");
+
+muteBtn.addEventListener("click", () => {
+  if (music.muted) {
+    music.muted = false;
+    muteBtn.textContent = "🔊";
+  } else {
+    music.muted = true;
+    muteBtn.textContent = "🔇";
+  }
+});
 
 
 </script>
